@@ -1,12 +1,15 @@
 import { useState } from "react";
+import Heading from "./components/Heading";
+import Menu from "./components/Menu";
 
 import "./App.css";
 
 function App() {
   return (
-    <div className="text-center">
-      <p>TicTacToe</p>
-    </div>
+    <>
+      <Heading />
+      <Menu />
+    </>
   );
 }
 
