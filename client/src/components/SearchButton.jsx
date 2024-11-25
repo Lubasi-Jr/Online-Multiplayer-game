@@ -1,10 +1,16 @@
 import React from "react";
 import magnifyingGlass from "../assets/magnifying-glass.svg";
 
-function SearchButton() {
+function SearchButton(props) {
   return (
     <div className="searchButton h-16 w-72 flex items-center justify-center">
-      <button className="rounded-2xl w-1/2 h-9 bg-slate-400 text-black flex items-center justify-center space-x-2">
+      <button
+        type="submit"
+        className="rounded-2xl w-1/2 h-9 bg-slate-400 text-black flex items-center justify-center space-x-2"
+        onClick={(event) => {
+          props.searchFunction();
+        }}
+      >
         <img
           src={magnifyingGlass}
           alt="Symbol of a magnifying glass"
