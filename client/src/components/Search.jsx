@@ -23,9 +23,7 @@ function Search() {
     setID(socket.id);
 
     return () => {
-      return () => {
-        socket.disconnect(); // Disconnect on cleanup
-      };
+      socket.disconnect(); // Clean up the socket connection on component unmount
     };
   }, []);
 
