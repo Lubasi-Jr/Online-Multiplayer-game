@@ -11,7 +11,9 @@ function Random() {
           className="h-full w-full"
         />
       </div>
-      <p className="text-xl font-semibold">Play v.s a random online</p>
+      <p className="text-xl font-magic font-semibold">
+        Play v.s a random online
+      </p>
     </div>
   );
 }

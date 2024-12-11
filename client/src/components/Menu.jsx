@@ -8,9 +8,9 @@ import Random from "./Random";
 function Menu() {
   return (
     <div className="flex flex-col items-center justify-center">
-      <Link to={"/search"}>
+      {/* <Link to={"/search"}>
         <Friendly />
-      </Link>
+      </Link> */}
 
       <Link to={"/search"}>
         <Random />

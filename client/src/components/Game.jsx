@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SymbolO from "./SymbolO";
 import SymbolX from "./SymbolX";
 import Square from "./Square";
+import checkWinner from "./GameLogic.js";
 
 let symbol;
 
@@ -18,6 +19,18 @@ function Game({ gameData, socket, playingAs }) {
     9: "",
   });
 
+  const [gameState, setGameState] = useState([
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+  ]);
+
   const [locked, setLock] = useState(playingAs === "X" ? false : true);
 
   const oppName =
@@ -32,7 +45,31 @@ function Game({ gameData, socket, playingAs }) {
   }, []);
 
   socket.on("gameUpdate", (data) => {
+    setGameState((previousArray) => {
+      const updatedArray = [...previousArray];
+      updatedArray[data.square - 1] = data.letter;
+
+      //Check winner
+      //Must be in setGameState becasue useState is asynchronous
+
+      const result = checkWinner(updatedArray);
+
+      if (result.winner) {
+        if (result.winner === "Draw") {
+          alert("It's a draw!");
+        } else {
+          const winnerDisplay =
+            result.winner === playingAs ? "You win!!!" : "You lose!";
+          alert(winnerDisplay);
+        }
+        setLock(true); // Lock the game if there's a result
+      }
+
+      return updatedArray;
+    });
+
     updateSquare(data.square, data.letter);
+
     //Code for checking winner
 
     //If game goes on, then update the states
@@ -58,8 +95,31 @@ function Game({ gameData, socket, playingAs }) {
 
       socket.emit("makeMove", { square: buttonID, letter: playingAs });
 
+      setGameState((previousArray) => {
+        const updatedArray = [...previousArray];
+        updatedArray[buttonID - 1] = playingAs;
+
+        const result = checkWinner(updatedArray);
+
+        if (result.winner) {
+          if (result.winner === "Draw") {
+            alert("It's a draw!");
+          } else {
+            const winnerDisplay =
+              result.winner === playingAs ? "You win!!!" : "You lose!";
+            alert(winnerDisplay);
+          }
+          setLock(true); // Lock the game if there's a result
+        }
+
+        return updatedArray;
+      });
+
       //
-      updateSquare(buttonID, playingAs); //Since you made the move, when calling updateSquare you just have to parse what you are playing as
+      //Since you made the move, when calling updateSquare you just have to parse what you are playing as
+      updateSquare(buttonID, playingAs);
+      //Update game state
+
       //Code to check winner
 
       //If game goes on, then update the states
@@ -70,9 +130,11 @@ function Game({ gameData, socket, playingAs }) {
   return (
     <>
       <div className="text-wrap mb-7 flex flex-col items-center justify-center">
-        <p className="text-xl font-bold mb-2">You are playing as {playingAs}</p>
+        <p className="text-xl font-bold mb-2 font-magic">
+          You are playing as {playingAs}
+        </p>
         <div className="flex items-center justify-center">
-          <p className="text-xl font-bold">
+          <p id="match" className="text-xl font-magic font-bold">
             {locked ? `${oppName}'s turn (Opponent)` : "Your turn"}
           </p>
         </div>

@@ -7,7 +7,7 @@ function Friendly() {
       <div className="symbol h-9 w-9 flex items-center justify-center">
         <img src={icon} alt="Symbol for friend" className="h-full w-full" />
       </div>
-      <p className="text-xl font-semibold">Play v.s your friend</p>
+      <p className="text-xl font-magic font-semibold">Play v.s your friend</p>
     </div>
   );
 }
