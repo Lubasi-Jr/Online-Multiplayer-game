@@ -3,6 +3,8 @@ import SymbolO from "./SymbolO";
 import SymbolX from "./SymbolX";
 import Square from "./Square";
 import checkWinner from "./GameLogic.js";
+import Back from "./BackButton.jsx";
+import { Link } from "react-router-dom";
 
 let symbol;
 
@@ -150,6 +152,9 @@ function Game({ gameData, socket, playingAs }) {
         <Square key={8} id={8} content={squareSymbol[8]} func={makeMove} />
         <Square key={9} id={9} content={squareSymbol[9]} func={makeMove} />
       </div>
+      <Link to={"/"}>
+        <Back />
+      </Link>
     </>
   );
 }

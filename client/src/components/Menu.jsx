@@ -4,6 +4,7 @@ import worldIcon from "../assets/world.svg";
 import { Link } from "react-router-dom";
 import Friendly from "./Friendly";
 import Random from "./Random";
+import Back from "./BackButton";
 
 function Menu() {
   return (

@@ -3,6 +3,8 @@ import io from "socket.io-client";
 import SearchBar from "./SearchBar";
 import SearchButton from "./SearchButton";
 import Game from "./Game";
+import Back from "./BackButton";
+import { Link } from "react-router-dom";
 
 const socket = io.connect("http://localhost:3000");
 
@@ -55,6 +57,10 @@ function Search() {
         <>
           <SearchBar set={playerName} />
           <SearchButton searchFunction={find} />
+
+          <Link to={"/"}>
+            <Back />
+          </Link>
         </>
       )}
     </div>

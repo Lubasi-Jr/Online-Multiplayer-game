@@ -1,5 +1,6 @@
 import React from "react";
 import worldIcon from "../assets/world.svg";
+import Back from "./BackButton";
 
 function Random() {
   return (
