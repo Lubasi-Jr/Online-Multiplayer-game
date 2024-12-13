@@ -4,7 +4,7 @@ import SymbolX from "./SymbolX";
 import Square from "./Square";
 import checkWinner from "./GameLogic.js";
 import Back from "./BackButton.jsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Leave from "./LeaveRoom";
 
 let symbol;
@@ -35,6 +35,7 @@ function Game({ gameData, socket, playingAs }) {
   ]);
 
   const [locked, setLock] = useState(playingAs === "X" ? false : true);
+  const navigate = useNavigate();
 
   const oppName =
     playingAs == "X" ? gameData.player2.p2name : gameData.player1.p1name;
@@ -44,6 +45,8 @@ function Game({ gameData, socket, playingAs }) {
 
     return () => {
       socket.off("gameUpdate");
+      socket.off("opponentLeft");
+      socket.disconnect();
     };
   }, []);
 
@@ -69,6 +72,15 @@ function Game({ gameData, socket, playingAs }) {
       }
 
       return updatedArray;
+    });
+
+    socket.on("opponentLeft", (data) => {
+      const abandonment = data.outcome;
+      alert(abandonment);
+      //Code that will unmount this current component and automatically return to the homepage
+      setTimeout(() => {
+        navigate("/"); // Navigate to the homepage (or another route)
+      }, 1000);
     });
 
     updateSquare(data.square, data.letter);

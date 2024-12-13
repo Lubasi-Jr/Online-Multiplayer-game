@@ -24,6 +24,10 @@ function Search() {
     //These event listeners will get attached on mount and will be active the whole time.
     //They can be called event if they are wrapped in a useEffect with a dependecy of userID
 
+    if (!socket.connected) {
+      socket.connect();
+    }
+
     setID(socket.id);
 
     return () => {
@@ -34,7 +38,7 @@ function Search() {
   function find() {
     if (userID) {
       //Start loader here
-      setLoader(!loading);
+      setLoader(true);
       socket.emit("find", { name: username, id: userID });
       socket.on("newGame", (data) => {
         const foundGame = data.allPlayers.find(
@@ -43,7 +47,7 @@ function Search() {
 
         if (foundGame) {
           //End loader here
-          setLoader(!loading);
+          setLoader(false);
           setGame(foundGame);
           setSymbol(foundGame.player1.p1ID === userID ? "X" : "O");
         }
