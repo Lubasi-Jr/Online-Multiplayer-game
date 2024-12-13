@@ -5,6 +5,7 @@ import SearchButton from "./SearchButton";
 import Game from "./Game";
 import Back from "./BackButton";
 import { Link } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const socket = io.connect("http://localhost:3000");
 
@@ -13,6 +14,7 @@ function Search() {
   const [userID, setID] = useState("");
   const [xoGame, setGame] = useState(null);
   const [playingAs, setSymbol] = useState("");
+  const [loading, setLoader] = useState(false);
 
   function playerName(gamerTag) {
     setUsername(gamerTag);
@@ -31,6 +33,8 @@ function Search() {
 
   function find() {
     if (userID) {
+      //Start loader here
+      setLoader(!loading);
       socket.emit("find", { name: username, id: userID });
       socket.on("newGame", (data) => {
         const foundGame = data.allPlayers.find(
@@ -38,6 +42,8 @@ function Search() {
         );
 
         if (foundGame) {
+          //End loader here
+          setLoader(!loading);
           setGame(foundGame);
           setSymbol(foundGame.player1.p1ID === userID ? "X" : "O");
         }
@@ -57,6 +63,7 @@ function Search() {
         <>
           <SearchBar set={playerName} />
           <SearchButton searchFunction={find} />
+          <ClipLoader color={"#1F509A"} loading={loading} size={75} />
 
           <Link to={"/"}>
             <Back />

@@ -1,10 +1,14 @@
 import React from "react";
 import worldIcon from "../assets/world.svg";
 import Back from "./BackButton";
+import { motion } from "framer-motion";
 
 function Random() {
   return (
-    <div className="h-16 w-72 flex gap-1 items-center justify-center border-b border-slate-400">
+    <motion.div
+      whileHover={{ scale: 1.2, transition: { ease: "easeInOut" } }}
+      className="h-16 w-72 flex gap-1 items-center justify-center border-b border-slate-400"
+    >
       <div className="symbol h-9 w-9 flex items-center justify-center">
         <img
           src={worldIcon}
@@ -15,7 +19,7 @@ function Random() {
       <p className="text-xl font-magic font-semibold">
         Play v.s a random online
       </p>
-    </div>
+    </motion.div>
   );
 }
 
