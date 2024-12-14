@@ -27,6 +27,10 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log(`User disconnected: ${socket.id}`);
+
+    //Remove the player from the "arr" so that a prospective player is not matched up with someone that has been disconnected
+    arr = arr.filter((player) => player.id !== socket.id);
+
     //Find the game which this user is playing in and alert their opponents that they have left the game
     const game = playingArray.find(
       (g) => g.player1.p1ID === socket.id || g.player2.p2ID === socket.id
@@ -37,7 +41,7 @@ io.on("connection", (socket) => {
 
       io.to(opponentID).emit("opponentLeft", {
         outcome: "Your opponent has left the game",
-      }); //The square and letter that was passed by the sender
+      });
     }
   });
 
