@@ -36,6 +36,7 @@ function Game({ gameData, socket, playingAs }) {
 
   const [locked, setLock] = useState(playingAs === "X" ? false : true);
   const navigate = useNavigate();
+  const [gameResult, setGameResult] = useState("");
 
   const oppName =
     playingAs == "X" ? gameData.player2.p2name : gameData.player1.p1name;
@@ -62,13 +63,16 @@ function Game({ gameData, socket, playingAs }) {
 
       if (result.winner) {
         if (result.winner === "Draw") {
-          alert("It's a draw!");
+          setGameResult("It's a draw!!");
         } else {
           const winnerDisplay =
             result.winner === playingAs ? "You win!!!" : "You lose!";
-          alert(winnerDisplay);
+          setGameResult(winnerDisplay);
         }
         setLock(true); // Lock the game if there's a result
+        setTimeout(() => {
+          navigate("/"); // Navigate to the homepage (or another route)
+        }, 5000);
       }
 
       return updatedArray;
@@ -118,13 +122,16 @@ function Game({ gameData, socket, playingAs }) {
 
         if (result.winner) {
           if (result.winner === "Draw") {
-            alert("It's a draw!");
+            setGameResult("It's a draw");
           } else {
             const winnerDisplay =
               result.winner === playingAs ? "You win!!!" : "You lose!";
-            alert(winnerDisplay);
+            setGameResult(winnerDisplay);
           }
           setLock(true); // Lock the game if there's a result
+          setTimeout(() => {
+            navigate("/"); // Navigate to the homepage (or another route)
+          }, 4000);
         }
 
         return updatedArray;
@@ -149,8 +156,10 @@ function Game({ gameData, socket, playingAs }) {
           You are playing as {playingAs}
         </p>
         <div className="flex items-center justify-center">
+          {/* If the game result is empty, then the game is still going on, So display whose turn it is. Otherwise display the game result */}
           <p id="match" className="text-xl font-magic font-bold">
-            {locked ? `${oppName}'s turn (Opponent)` : "Your turn"}
+            {gameResult ||
+              (locked ? `${oppName}'s turn (Opponent)` : "Your turn")}
           </p>
         </div>
       </div>
