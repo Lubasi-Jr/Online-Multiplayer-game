@@ -10,7 +10,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 //https://online-multiplayer-game-server-2ga7x0zlo.vercel.app/?vercelToolbarCode=mu6JG-JnnX6leDF
 
 const socket = io.connect(
-  "https://online-multiplayer-game-server-2ga7x0zlo.vercel.app/?vercelToolbarCode=mu6JG-JnnX6leDF"
+  "https://online-multiplayer-game-server-2ga7x0zlo.vercel.app"
 );
 
 function Search() {
