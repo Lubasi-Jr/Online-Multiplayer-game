@@ -7,7 +7,11 @@ import Back from "./BackButton";
 import { Link } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 
-const socket = io.connect("http://localhost:3000");
+//https://online-multiplayer-game-server-2ga7x0zlo.vercel.app/?vercelToolbarCode=mu6JG-JnnX6leDF
+
+const socket = io.connect(
+  "https://online-multiplayer-game-server-2ga7x0zlo.vercel.app/?vercelToolbarCode=mu6JG-JnnX6leDF"
+);
 
 function Search() {
   const [username, setUsername] = useState("");
