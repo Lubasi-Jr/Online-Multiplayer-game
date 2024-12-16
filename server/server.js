@@ -12,6 +12,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 
 //https://online-multiplayer-game-1lzsw5iwm-lubasis-projects-b5f16d2b.vercel.app/
+//https://online-multiplayer-game.vercel.app
 
 app.get("/", (req, res) => {
   res.send("Server is running and WebSocket is ready!");
@@ -20,8 +21,7 @@ app.get("/", (req, res) => {
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin:
-      "https://online-multiplayer-game-1lzsw5iwm-lubasis-projects-b5f16d2b.vercel.app",
+    origin: "https://online-multiplayer-game.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
   },
 });
