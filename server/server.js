@@ -3,8 +3,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import http from "http";
 import { Server } from "socket.io";
-import { connect } from "http2";
-import { log } from "console";
+
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -12,7 +11,23 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+const allowedOrigins = [
+  "https://online-multiplayer-game.vercel.app",
+  "https://online-multiplayer-game-hafeyz2ma-lubasis-projects-b5f16d2b.vercel.app",
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("Server is running and WebSocket is ready!");
@@ -21,8 +36,14 @@ app.get("/", (req, res) => {
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL,
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST"],
   },
 });
 
