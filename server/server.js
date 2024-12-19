@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 3000;
 const allowedOrigins = [
   "https://online-multiplayer-game.vercel.app",
   "https://online-multiplayer-game-hafeyz2ma-lubasis-projects-b5f16d2b.vercel.app",
+  "https://online-multiplayer-game-lubasis-projects-b5f16d2b.vercel.app",
 ];
 
 app.use(
