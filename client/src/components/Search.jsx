@@ -7,11 +7,7 @@ import Back from "./BackButton";
 import { Link } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 
-//https://online-multiplayer-game-server-2ga7x0zlo.vercel.app/?vercelToolbarCode=mu6JG-JnnX6leDF
-
-const socket = io.connect(
-  "https://online-multiplayer-game-server-2ga7x0zlo.vercel.app"
-);
+const socket = io.connect(import.meta.env.REACT_APP_SERVER_URL);
 
 function Search() {
   const [username, setUsername] = useState("");
